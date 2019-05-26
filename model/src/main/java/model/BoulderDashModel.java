@@ -44,6 +44,15 @@ public class BoulderDashModel implements IBoulderDashModel {
 	}
 	
 	@Override
+	public FactoryCorrespondance getCorrespondance(char ch)  {
+		for(int i=0; i<Tile.correspondances.size(); ++i) {
+			if(Tile.correspondances.get(i).getChar()==ch)
+				return Tile.correspondances.get(i);
+		}
+		return null;
+	}
+	
+	@Override
 	public void setControllable(ITile tile) {
 		this.controllable = tile;
 	}

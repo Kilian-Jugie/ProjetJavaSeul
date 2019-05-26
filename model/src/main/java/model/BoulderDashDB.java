@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.CallableStatement;
 
+import contract.IBoulderDashModel;
 import contract.tile.ITileMap;
+import model.tile.Position;
 import model.tile.TileMap;
 
 public class BoulderDashDB {
@@ -32,7 +34,7 @@ public class BoulderDashDB {
 		}
 	}
 	
-	ITileMap getMapId(int id) {
+	ITileMap getMapId(int id, IBoulderDashModel model) {
 		final String sql = "{call getMapId(?)}";
 		ITileMap ret = null;
 		
@@ -48,7 +50,8 @@ public class BoulderDashDB {
 			while(resultSet.next()) {
 				for(int i = 0; i<columnCount; ++i) {
 					int index = i+1; //Les handicapés qui ont fait ça se sont dit "tiens on va commencer les index à 1"
-					
+					//Mouais à tester !!!
+					ret.setTileAt(model.getCorrespondance((char)resultSet.getInt(index)).getFactory().apply(new Position(i, currentLine), ret), new Position(i, currentLine));
 				}
 				++currentLine;
 			}

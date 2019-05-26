@@ -1,6 +1,8 @@
 package model.tile.factories;
 
+import contract.tile.IPosition;
 import contract.tile.ITile;
+import contract.tile.ITileMap;
 import model.tile.Position;
 import model.tile.Sprite;
 import model.tile.TileBasic;
@@ -13,7 +15,7 @@ import model.tile.decorators.MovableDecorator;
 public class PlayerFactory {
 	private static final Sprite playerSprite = new Sprite("player.png");
 	
-	public static final ITile createPlayer(Position position, TileMap map) {
+	public static final ITile createPlayer(IPosition position, ITileMap map) {
 		return new ControllableDecorator(new MovableDecorator(new CrushableDecorator(new ExplodableDecorator(new TileBasic(playerSprite, position, map)))));
 	}
 }

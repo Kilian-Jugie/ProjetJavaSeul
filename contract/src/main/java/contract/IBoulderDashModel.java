@@ -10,5 +10,7 @@ public interface IBoulderDashModel {
 
 	void setControllable(ITile tile);
 
+	IFactoryCorrespondance getCorrespondance(char ch);
+
 
 }

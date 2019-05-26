@@ -22,7 +22,7 @@ public class TileMap implements ITileMap {
 
 	@Override
 	public void setAirAt(IPosition position) {
-		this.setTileAt(AirFactory.createAir(Position.fromIPosition(position), this), position);
+		this.setTileAt(AirFactory.createAir(position, this), position);
 	}
 
 }
