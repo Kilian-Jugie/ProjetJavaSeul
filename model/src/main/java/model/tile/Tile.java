@@ -1,25 +1,38 @@
 package model.tile;
 
+import java.util.ArrayList;
+
+import contract.IBoulderDashModel;
 import contract.tile.ICollideAction;
 import contract.tile.IDamageAction;
+import contract.tile.IMoveAction;
+import contract.tile.IPickAction;
 import contract.tile.IPosition;
 import contract.tile.ISprite;
 import contract.tile.ITile;
 import contract.tile.ITileMap;
+import model.BoulderDashModel;
 
 public abstract class Tile implements ITile {
-	private final Sprite sprite;
-	private final Position position;
-	private final TileMap map; //Used to delete object
+	private final ISprite sprite;
+	private final IPosition position;
+	private final ITileMap map; //Used to delete object
+	private final IBoulderDashModel model = BoulderDashModel.getInstance();
 	
-	public static final Sprite airSprite = new Sprite("air.png");
+	protected int pickedDiamonds = 0;
 	
-	public Tile(Sprite sprite, Position position, TileMap map) {
-		this.sprite = sprite;
-		this.position = position;
-		this.map = map;
+	protected IBoulderDashModel getModel() {
+		return model;
 	}
-
+	
+	public static ArrayList<FactoryCorrespondance> correspondances;
+	
+	public Tile(ISprite iSprite, IPosition iPosition, ITileMap iTileMap) {
+		this.sprite = iSprite;
+		this.position = iPosition;
+		this.map = iTileMap;
+	}
+	
 	@Override
 	public ISprite getSprite() {
 		return this.sprite;
@@ -42,7 +55,7 @@ public abstract class Tile implements ITile {
 	
 	@Override
 	public boolean collide(ICollideAction ac) {
-		return true; //Base: no collision with tile
+		return false; //Base: collision with tile
 	}
 
 	@Override
@@ -52,6 +65,16 @@ public abstract class Tile implements ITile {
 	
 	@Override
 	public void delete() {
-		
+		map.setAirAt(this.position);
+	}
+	
+	@Override
+	public void pick(IPickAction ac) {
+		//Base: nothing to do
+	}
+	
+	@Override
+	public boolean move(IMoveAction ac) {
+		return false; //Object cannot move
 	}
 }

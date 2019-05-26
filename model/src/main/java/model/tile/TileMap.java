@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import contract.tile.IPosition;
 import contract.tile.ITile;
 import contract.tile.ITileMap;
+import model.tile.factories.AirFactory;
 
 public class TileMap implements ITileMap {
 	private ArrayList<ArrayList<ITile>> map;

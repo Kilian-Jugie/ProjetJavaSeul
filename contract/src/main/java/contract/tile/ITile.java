@@ -1,5 +1,6 @@
 package contract.tile;
 
+
 public interface ITile {
 	public ISprite getSprite();
 	public IPosition getPosition();
@@ -22,4 +23,12 @@ public interface ITile {
 	 * 
 	 */
 	public void delete();
+	
+	public void pick(IPickAction ac);
+	
+	/*
+	 * return: true is move success else false
+	 * 
+	 */
+	public boolean move(IMoveAction ac);
 }
