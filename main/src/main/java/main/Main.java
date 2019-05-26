@@ -4,10 +4,8 @@
  */
 package main;
 
-import contract.ControllerOrder;
-import controller.Controller;
-import model.Model;
-import view.View;
+import contract.IBoulderDashModel;
+import model.BoulderDashModel;
 
 /**
  * The Class Main.
@@ -16,6 +14,8 @@ import view.View;
  */
 public abstract class Main {
 
+	private static final int mapID = 1; 
+	
     /**
      * The main method.
      *
@@ -23,12 +23,7 @@ public abstract class Main {
      *            the arguments
      */
     public static void main(final String[] args) {
-        final Model model = new Model();
-        final View view = new View(model);
-        final Controller controller = new Controller(view, model);
-        view.setController(controller);
-
-        controller.control();
-        controller.orderPerform(ControllerOrder.English);
+		final IBoulderDashModel model = new BoulderDashModel(mapID);
+		
     }
 }
