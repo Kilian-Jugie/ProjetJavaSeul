@@ -30,5 +30,10 @@ public class MovableDecorator extends Decorator {
 		}
 		return this.getMap().getTileAt(futurePosition).collide(new CollideAction(ac.getDirection(), ac.getCollideType(), this));
 	}
+	
+	@Override
+	public boolean isMovable() {
+		return true;
+	}
 
 }

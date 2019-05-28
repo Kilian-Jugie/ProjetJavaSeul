@@ -1,9 +1,11 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import contract.IBoulderDashModel;
 import contract.tile.ITile;
+import contract.tile.ITileMap;
 import model.tile.FactoryCorrespondance;
 import model.tile.Tile;
 import model.tile.factories.AirFactory;
@@ -15,22 +17,36 @@ import model.tile.factories.PlayerFactory;
 import model.tile.factories.RockFactory;
 import model.tile.factories.WallFactory;
 
-public class BoulderDashModel implements IBoulderDashModel {
+public class BoulderDashModel extends Observable implements IBoulderDashModel {
 	private static IBoulderDashModel INSTANCE = null;
 	private ITile controllable = null;
 	private ArrayList<ITile> tickable;
+	private ITileMap map;
 	
 	public BoulderDashModel(int id) throws RuntimeException {
 		if(INSTANCE!=null) 
 			throw new RuntimeException("BoulderDashModel is already instancied !");
 		INSTANCE = this;
-		this.setupTileCorrespondances();
+		
 	}
 	
+	@Override
+	public ITileMap getMap() {
+		return map;
+	}
 	
 	public static final IBoulderDashModel getInstance() {
 		return INSTANCE;
 	}
+	
+	@Override
+	public void initialize() {
+		BoulderDashDB db = BoulderDashDB.getInstance();
+		this.setupTileCorrespondances();
+		map = db.getMapId(1, this);
+		
+	}
+	
 	
 	private void setupTileCorrespondances() {
 		Tile.correspondances.add(new FactoryCorrespondance('A', AirFactory::createAir));
@@ -66,4 +82,10 @@ public class BoulderDashModel implements IBoulderDashModel {
 	public void addTickable(ITile tile) {
 		tickable.add(tile);
 	}
+
+	@Override
+	public Observable getObservable() {
+		return this;
+	}
+
 }

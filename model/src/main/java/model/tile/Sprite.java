@@ -12,10 +12,10 @@ public class Sprite implements ISprite {
 	
 	public Sprite(String imgFileName) {
 		try {
-			this.image = ImageIO.read(new File(imgFileName));
+			this.image = ImageIO.read(getClass().getResource("/"+imgFileName));
 		}
 		catch(Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println(e.getMessage()+" : '"+imgFileName+"'");
 			e.printStackTrace();
 		}
 	}

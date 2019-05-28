@@ -8,6 +8,7 @@ import contract.tile.IDamageAction;
 import contract.tile.IMoveAction;
 import contract.tile.IPickAction;
 import contract.tile.IPosition;
+import contract.tile.IRenderObject;
 import contract.tile.ISprite;
 import contract.tile.ITile;
 import contract.tile.ITileMap;
@@ -25,7 +26,7 @@ public abstract class Tile implements ITile {
 		return model;
 	}
 	
-	public static ArrayList<FactoryCorrespondance> correspondances;
+	public static ArrayList<FactoryCorrespondance> correspondances = new ArrayList<FactoryCorrespondance>();
 	
 	public Tile(ISprite iSprite, IPosition iPosition, ITileMap iTileMap) {
 		this.sprite = iSprite;
@@ -76,5 +77,15 @@ public abstract class Tile implements ITile {
 	@Override
 	public boolean move(IMoveAction ac) {
 		return false; //Object cannot move
+	}
+	
+	@Override
+	public boolean isMovable() {
+		return false; //No movable by default
+	}
+	
+	@Override
+	public IRenderObject toRenderObject() {
+		return new RenderObject(this);
 	}
 }

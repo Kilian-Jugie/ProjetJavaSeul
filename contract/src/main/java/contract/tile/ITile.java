@@ -31,4 +31,9 @@ public interface ITile {
 	 * 
 	 */
 	public boolean move(IMoveAction ac);
+	
+	//Require to use showboard
+	public boolean isMovable();
+	
+	public IRenderObject toRenderObject();
 }
