@@ -28,11 +28,13 @@ public abstract class Main {
      */
     public static void main(final String[] args) {
 		final IBoulderDashModel model = new BoulderDashModel(mapID);
-		final IBoulderDashController controller = new BoulderDashController(model.getControllable());
+		final IBoulderDashController controller = new BoulderDashController();
+		model.setController(controller);
 		final IBoulderDashView view = new BoulderDashView(model, controller);
 		controller.setView(view);
 		model.initialize();
 		view.initialize();
+		controller.start();
 		
 		
     }

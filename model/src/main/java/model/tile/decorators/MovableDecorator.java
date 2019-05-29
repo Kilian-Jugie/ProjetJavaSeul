@@ -16,7 +16,7 @@ public class MovableDecorator extends Decorator {
 		IPosition futurePosition = this.getPosition();
 		switch(ac.getDirection()) {
 		case DOWN:
-			futurePosition.setY(futurePosition.getY()-1);
+			futurePosition.setY(futurePosition.getY()+1);
 			break;
 		case LEFT:
 			futurePosition.setX(futurePosition.getX()-1);
@@ -25,7 +25,7 @@ public class MovableDecorator extends Decorator {
 			futurePosition.setX(futurePosition.getX()+1);
 			break;
 		case UP:
-			futurePosition.setY(futurePosition.getY()+1);
+			futurePosition.setY(futurePosition.getY()-1);
 			break;
 		}
 		return this.getMap().getTileAt(futurePosition).collide(new CollideAction(ac.getDirection(), ac.getCollideType(), this));

@@ -5,19 +5,44 @@ import java.awt.event.KeyEvent;
 import contract.GameAction;
 import contract.IBoulderDashController;
 import contract.IBoulderDashView;
+import contract.tile.CollideType;
+import contract.tile.Direction;
 import contract.tile.ITile;
 
 public class BoulderDashController implements IBoulderDashController {
-	private final ITile controllableObject;
+	private ITile controllableObject;
 	private IBoulderDashView view;
 	
-	public BoulderDashController(ITile controllableObject) {
-		this.controllableObject = controllableObject;
+	public BoulderDashController() {
+	}
+	
+	@Override
+	public void setControllableObject(ITile tile) {
+		this.controllableObject = tile;
 	}
 	
 	@Override
 	public void actionPerform(GameAction ac) {
-		//TODO
+		if(controllableObject==null) {
+			System.out.println("Controllable null !");
+			return;
+		}
+		if(ac==null) return; //unhandled key
+		switch(ac) {
+		case MOVE_DOWN:
+			controllableObject.move(new MoveAction(Direction.DOWN, CollideType.HUMAN));
+			break;
+		case MOVE_LEFT:
+			controllableObject.move(new MoveAction(Direction.LEFT, CollideType.HUMAN));
+			break;
+		case MOVE_RIGHT:
+			controllableObject.move(new MoveAction(Direction.RIGHT, CollideType.HUMAN));
+			break;
+		case MOVE_UP:
+			controllableObject.move(new MoveAction(Direction.UP, CollideType.HUMAN));
+			break;
+		}
+		view.refresh();
 	}
 	
 	public void registerKeyCorrespondances() {

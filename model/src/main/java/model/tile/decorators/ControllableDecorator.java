@@ -6,7 +6,14 @@ public class ControllableDecorator extends Decorator {
 
 	public ControllableDecorator(Tile tile) {
 		super(tile);
-		this.getModel().setControllable(this);
+		this.getModel().getController().setControllableObject(tile);
+		
+	}
+	
+	@Override
+	public
+	boolean isMovable() {
+		return true;
 	}
 
 }

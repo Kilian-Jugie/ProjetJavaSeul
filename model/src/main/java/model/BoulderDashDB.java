@@ -18,6 +18,8 @@ public class BoulderDashDB {
 	private static BoulderDashDB INSTANCE = null;
 	private boolean isConnected = false;
 	
+	private static int mapSize = 20;
+	
 	private BoulderDashDB() {}
 	
 	public static BoulderDashDB getInstance() {
@@ -50,25 +52,20 @@ public class BoulderDashDB {
 			final int columnCount = resultSet.getMetaData().getColumnCount();
 			//We initialize ret here to avoid useless initialization in case of SQLException during connection
 			ret = new TileMap();
-			ret.setSize(columnCount, 21);
+			ret.setSize(mapSize, mapSize);
 			int currentLine = 0;
 			while(resultSet.next()) {
 				//ret.getMap().add(new ArrayList<ITile>());
 				//ret.getMap().get(currentLine).ensureCapacity(columnCount);
-				for(int i = 1; i<columnCount; ++i) { //First column is id so we skip
+				for(int i = 1; i<mapSize+1; ++i) { //First column is id so we skip
 					
 					int index = i+1;
 					//Mouais à tester !!!
-					System.out.print(ret.getMap().size());
-					ret.setTileAt(
-							model.getCorrespondance(
-									resultSet.getString(index)
-									.charAt(0))
-							.getFactory()
-							.apply(new Position(i-1, currentLine), ret), new Position(i-1, currentLine));
+					ret.setTileAt(model.getCorrespondance(resultSet.getString(index).charAt(0)).getFactory().apply(new Position(i-1, currentLine), ret), new Position(i-1, currentLine));
 				}
 				
 				++currentLine;
+				if(currentLine==mapSize) break;
 			}
 		}
 		catch(final SQLException e) {

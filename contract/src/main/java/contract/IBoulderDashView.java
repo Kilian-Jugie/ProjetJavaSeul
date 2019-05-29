@@ -8,4 +8,6 @@ public interface IBoulderDashView {
 
 	void initialize();
 
+	void refresh();
+
 }

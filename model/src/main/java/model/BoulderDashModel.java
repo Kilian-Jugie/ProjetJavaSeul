@@ -3,10 +3,13 @@ package model;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import contract.IBoulderDashController;
 import contract.IBoulderDashModel;
+import contract.tile.IPosition;
 import contract.tile.ITile;
 import contract.tile.ITileMap;
 import model.tile.FactoryCorrespondance;
+import model.tile.Position;
 import model.tile.Tile;
 import model.tile.factories.AirFactory;
 import model.tile.factories.BorderFactory;
@@ -19,15 +22,25 @@ import model.tile.factories.WallFactory;
 
 public class BoulderDashModel extends Observable implements IBoulderDashModel {
 	private static IBoulderDashModel INSTANCE = null;
-	private ITile controllable = null;
-	private ArrayList<ITile> tickable;
+	private ArrayList<ITile> tickable = new ArrayList<ITile>();
 	private ITileMap map;
+	private IBoulderDashController controller = null;
 	
 	public BoulderDashModel(int id) throws RuntimeException {
 		if(INSTANCE!=null) 
 			throw new RuntimeException("BoulderDashModel is already instancied !");
 		INSTANCE = this;
 		
+	}
+	
+	@Override
+	public void setController(IBoulderDashController controller) {
+		this.controller = controller;
+	}
+	
+	@Override
+	public IBoulderDashController getController() {
+		return this.controller;
 	}
 	
 	@Override
@@ -46,7 +59,6 @@ public class BoulderDashModel extends Observable implements IBoulderDashModel {
 		map = db.getMapId(1, this);
 		
 	}
-	
 	
 	private void setupTileCorrespondances() {
 		Tile.correspondances.add(new FactoryCorrespondance('A', AirFactory::createAir));
@@ -69,16 +81,6 @@ public class BoulderDashModel extends Observable implements IBoulderDashModel {
 	}
 	
 	@Override
-	public void setControllable(ITile tile) {
-		this.controllable = tile;
-	}
-	
-	@Override
-	public ITile getControllable() {
-		return this.controllable;
-	}
-	
-	@Override
 	public void addTickable(ITile tile) {
 		tickable.add(tile);
 	}
@@ -86,6 +88,11 @@ public class BoulderDashModel extends Observable implements IBoulderDashModel {
 	@Override
 	public Observable getObservable() {
 		return this;
+	}
+	
+	@Override
+	public ITile createAir(int x, int y) {
+		return AirFactory.createAir(new Position(x,y), map);
 	}
 
 }

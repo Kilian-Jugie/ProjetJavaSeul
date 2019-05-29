@@ -10,7 +10,7 @@ import model.tile.factories.AirFactory;
 public class TileMap implements ITileMap {
 	private ArrayList<ArrayList<ITile>> map = new ArrayList<ArrayList<ITile>>();
 
-	void setArraySize(ArrayList<Object> arr, int i) {
+	static <T> void setArraySize(ArrayList<T> arr, int i) {
 		for(int n=0; n<i; ++n) {
 			arr.add(null);
 		}
@@ -19,11 +19,12 @@ public class TileMap implements ITileMap {
 	@Override
 	public void setSize(int column, int lines) {
 		map.ensureCapacity(lines);
-		setArraySize(map, lines);
+		TileMap.setArraySize(map, lines);
 		for(int i=0; i<lines; ++i) {
 			ArrayList<ITile> ar = map.get(i);
 			ar = new ArrayList<ITile>();
-			ar.ensureCapacity(column);
+			TileMap.setArraySize(ar, column);
+			map.set(i, ar);
 		}
 	}
 	
@@ -39,8 +40,7 @@ public class TileMap implements ITileMap {
 	
 	@Override
 	public void setTileAt(ITile tile, IPosition position) {
-		System.out.println("Position: "+position.getX()+":"+position.getY());
-		map.get(position.getX()).set(position.getY(), tile);
+		map.get(position.getY()).set(position.getX(), tile);
 		
 	}
 
