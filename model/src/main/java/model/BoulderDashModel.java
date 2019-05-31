@@ -5,11 +5,10 @@ import java.util.Observable;
 
 import contract.IBoulderDashController;
 import contract.IBoulderDashModel;
-import contract.tile.IPosition;
 import contract.tile.ITile;
 import contract.tile.ITileMap;
 import model.tile.FactoryCorrespondance;
-import model.tile.Position;
+import model.Position;
 import model.tile.Tile;
 import model.tile.factories.AirFactory;
 import model.tile.factories.BorderFactory;

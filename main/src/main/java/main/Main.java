@@ -7,8 +7,12 @@ package main;
 import contract.IBoulderDashController;
 import contract.IBoulderDashModel;
 import contract.IBoulderDashView;
+import contract.tile.ITile;
 import controller.BoulderDashController;
 import model.BoulderDashModel;
+import model.Position;
+import model.tile.Tile;
+import model.tile.factories.AirFactory;
 import view.BoulderDashView;
 
 /**
@@ -36,6 +40,14 @@ public abstract class Main {
 		view.initialize();
 		controller.start();
 		
+		
+		/*ITile normal = new Tile(null,null,null);
+		System.out.println(normal.collide(null));
+		ITile air = AirFactory.createAir(null, null);
+		System.out.println(air.collide(null));
+		
+		model.getMap().setAirAt(new Position(0,0));
+		System.out.println(model.getMap().getTileAt(0, 0).description());*/
 		
     }
 }

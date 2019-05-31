@@ -10,7 +10,7 @@ import java.sql.CallableStatement;
 import contract.IBoulderDashModel;
 import contract.tile.ITile;
 import contract.tile.ITileMap;
-import model.tile.Position;
+import model.Position;
 import model.tile.TileMap;
 
 public class BoulderDashDB {

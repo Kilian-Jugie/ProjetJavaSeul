@@ -71,6 +71,8 @@ public class BoulderDashView extends Observable implements IBoulderDashView, Run
 		frameView.setSize(BoulderDashView.windowWidth, BoulderDashView.windowHeight);
 		this.addObserver(frameView.getObserver());
 		frameView.addKeyListener(this);
+		
+		
 	}
 	
 	@Override

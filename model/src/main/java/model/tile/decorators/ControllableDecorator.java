@@ -1,19 +1,19 @@
 package model.tile.decorators;
 
-import model.tile.Tile;
+import contract.tile.ITile;
 
 public class ControllableDecorator extends Decorator {
 
-	public ControllableDecorator(Tile tile) {
+	public ControllableDecorator(ITile tile) {
 		super(tile);
-		this.getModel().getController().setControllableObject(tile);
-		
+		decorated.getModel().getController().setControllableObject(this);
 	}
 	
 	@Override
-	public
-	boolean isMovable() {
-		return true;
-	}
+	public boolean isMovable() {return true;}
 
+	@Override
+	public String description() {
+		return decorated.description()+"+ControllableDecorator";
+	}
 }

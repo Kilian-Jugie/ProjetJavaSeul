@@ -1,16 +1,21 @@
 package model.tile.decorators;
 
-import model.tile.Tile;
+import contract.tile.ITile;
 
 public class HeavyDecorator extends Decorator {
 
-	public HeavyDecorator(Tile tile) {
+	public HeavyDecorator(ITile tile) {
 		super(tile);
 	}
 	
 	@Override
 	public void update() {
-		//TODO: Game mechanic gravity
+		
 	}
-
+	
+	@Override
+	public String description() {
+		return decorated.description()+"+HeavyDecorator";
+	}
+	
 }

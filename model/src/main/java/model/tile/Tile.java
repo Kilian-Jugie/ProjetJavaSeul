@@ -13,25 +13,20 @@ import contract.tile.ISprite;
 import contract.tile.ITile;
 import contract.tile.ITileMap;
 import model.BoulderDashModel;
+import model.RenderObject;
 
-public abstract class Tile implements ITile {
-	private final ISprite sprite;
-	private final IPosition position;
-	private final ITileMap map; //Used to delete object
+public class Tile implements ITile {
+	private ISprite sprite;
+	private IPosition position;
+	private ITileMap map;
 	private final IBoulderDashModel model = BoulderDashModel.getInstance();
-	
-	protected int pickedDiamonds = 0;
-	
-	protected IBoulderDashModel getModel() {
-		return model;
-	}
 	
 	public static ArrayList<FactoryCorrespondance> correspondances = new ArrayList<FactoryCorrespondance>();
 	
-	public Tile(ISprite iSprite, IPosition iPosition, ITileMap iTileMap) {
-		this.sprite = iSprite;
-		this.position = iPosition;
-		this.map = iTileMap;
+	public Tile(ISprite sprite, IPosition position, ITileMap map) {
+		this.sprite = sprite;
+		this.position = position;
+		this.map = map;
 	}
 	
 	@Override
@@ -43,49 +38,66 @@ public abstract class Tile implements ITile {
 	public IPosition getPosition() {
 		return this.position;
 	}
-	
+
 	@Override
 	public ITileMap getMap() {
 		return this.map;
 	}
-	
+
 	@Override
 	public void update() {
-		//Base: nothing to do
+		
 	}
-	
+
 	@Override
 	public boolean collide(ICollideAction ac) {
-		return false; //Base: collision with tile
+		return false;
 	}
 
 	@Override
 	public void damage(IDamageAction ac) {
-		//Base: nothing to do
+		
 	}
-	
+
 	@Override
 	public void delete() {
-		map.setAirAt(this.position);
+		this.map.setAirAt(this.position);
+		this.getModel().getController().getView().refresh();
 	}
-	
+
 	@Override
 	public void pick(IPickAction ac) {
-		//Base: nothing to do
+		
 	}
-	
+
 	@Override
 	public boolean move(IMoveAction ac) {
-		return false; //Object cannot move
+		return false;
 	}
-	
+
 	@Override
 	public boolean isMovable() {
-		return false; //No movable by default
+		return false;
 	}
-	
+
 	@Override
 	public IRenderObject toRenderObject() {
 		return new RenderObject(this);
 	}
+
+	@Override
+	public IBoulderDashModel getModel() {
+		return this.model;
+	}
+
+	@Override
+	public void setPosition(IPosition futurePosition) {
+		this.position = futurePosition;
+	}
+
+	@Override
+	public String description() {
+		return "Tile";
+	}
+
 }

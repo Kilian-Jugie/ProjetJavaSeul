@@ -2,33 +2,41 @@ package model.tile.decorators;
 
 import contract.tile.IMoveAction;
 import contract.tile.IPosition;
+import contract.tile.ITile;
+import model.Position;
 import model.tile.CollideAction;
-import model.tile.Tile;
 
 public class MovableDecorator extends Decorator {
 
-	public MovableDecorator(Tile tile) {
+	public MovableDecorator(ITile tile) {
 		super(tile);
 	}
 	
 	@Override
 	public boolean move(IMoveAction ac) {
-		IPosition futurePosition = this.getPosition();
+		IPosition position = this.getPosition();
+		
+		IPosition futurePosition = new Position(position.getX(),position.getY()); //Create a deep copy to avoid reference to move player before checking collide()
 		switch(ac.getDirection()) {
 		case DOWN:
-			futurePosition.setY(futurePosition.getY()+1);
+			futurePosition.setY(position.getY()+1);
 			break;
 		case LEFT:
-			futurePosition.setX(futurePosition.getX()-1);
+			futurePosition.setX(position.getX()-1);
 			break;
 		case RIGHT:
-			futurePosition.setX(futurePosition.getX()+1);
+			futurePosition.setX(position.getX()+1);
 			break;
 		case UP:
-			futurePosition.setY(futurePosition.getY()-1);
+			futurePosition.setY(position.getY()-1);
 			break;
 		}
-		return this.getMap().getTileAt(futurePosition).collide(new CollideAction(ac.getDirection(), ac.getCollideType(), this));
+		
+		if(this.getMap().getTileAt(futurePosition).collide(new CollideAction(ac.getDirection(), ac.getCollideType(), this.decorated))==true) {
+			decorated.setPosition(futurePosition);
+			return true;
+		}
+		return false;
 	}
 	
 	@Override
@@ -36,4 +44,8 @@ public class MovableDecorator extends Decorator {
 		return true;
 	}
 
+	@Override
+	public String description() {
+		return decorated.description()+"+MovableDecorator";
+	}
 }

@@ -9,4 +9,5 @@ public interface IBoulderDashController {
 	
 	void start();
 	void setControllableObject(ITile tile);
+	IBoulderDashView getView();
 }

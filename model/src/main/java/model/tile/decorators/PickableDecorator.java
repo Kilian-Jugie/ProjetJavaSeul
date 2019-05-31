@@ -1,25 +1,30 @@
 package model.tile.decorators;
 
 import contract.tile.ICollideAction;
+import contract.tile.ITile;
 import model.tile.PickAction;
-import model.tile.Tile;
 
 public class PickableDecorator extends Decorator {
 
-	public PickableDecorator(Tile tile) {
+	public PickableDecorator(ITile tile) {
 		super(tile);
 	}
 	
 	@Override
 	public boolean collide(ICollideAction ac)  {
-		boolean b = super.collide(ac);
 		switch(ac.getType()) {
 		case HUMAN: {
+			System.out.println(ac.getOtherTile().description());
 			ac.getOtherTile().pick(new PickAction(this));
 			return true;
 		}
-		default: break;
+		default: return this.decorated.collide(ac);
 		}
-		return b;
 	}
+	
+	@Override
+	public String description() {
+		return decorated.description()+"+PickableDecorator";
+	}
+	
 }

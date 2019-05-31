@@ -22,6 +22,11 @@ public class BoulderDashController implements IBoulderDashController {
 	}
 	
 	@Override
+	public IBoulderDashView getView() {
+		return this.view;
+	}
+	
+	@Override
 	public void actionPerform(GameAction ac) {
 		if(controllableObject==null) {
 			System.out.println("Controllable null !");

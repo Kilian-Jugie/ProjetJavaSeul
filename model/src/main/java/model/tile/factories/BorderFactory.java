@@ -1,18 +1,16 @@
 package model.tile.factories;
 
 import contract.tile.IPosition;
+import contract.tile.ISprite;
 import contract.tile.ITile;
 import contract.tile.ITileMap;
-import model.tile.Position;
-import model.tile.Sprite;
-import model.tile.TileBasic;
-import model.tile.TileMap;
-
+import model.Sprite;
+import model.tile.Tile;
 
 public class BorderFactory {
-	private static final Sprite borderSprite = new Sprite("border.png");
+private static final ISprite sprite = new Sprite("border.png");
 	
 	public static final ITile createBorder(IPosition position, ITileMap map) {
-		return new TileBasic(borderSprite, position, map);
+		return new Tile(sprite, position, map);
 	}
 }

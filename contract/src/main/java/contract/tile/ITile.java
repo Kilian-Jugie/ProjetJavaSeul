@@ -1,5 +1,6 @@
 package contract.tile;
 
+import contract.IBoulderDashModel;
 
 public interface ITile {
 	public ISprite getSprite();
@@ -36,4 +37,8 @@ public interface ITile {
 	public boolean isMovable();
 	
 	public IRenderObject toRenderObject();
+	public IBoulderDashModel getModel();
+	public void setPosition(IPosition futurePosition);
+	
+	public String description();
 }

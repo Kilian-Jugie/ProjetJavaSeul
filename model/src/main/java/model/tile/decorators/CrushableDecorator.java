@@ -1,24 +1,28 @@
 package model.tile.decorators;
 
 import contract.tile.IDamageAction;
-import model.tile.Tile;
+import contract.tile.ITile;
 
 public class CrushableDecorator extends Decorator {
-	
-	public CrushableDecorator(Tile tile) {
+
+	public CrushableDecorator(ITile tile) {
 		super(tile);
 	}
-
+	
 	@Override
 	public void damage(IDamageAction ac) {
-		super.damage(ac);
+		decorated.damage(ac);
 		switch(ac.getType()) {
-		case PHYSIC: {
+		case PHYSIC:
 			this.delete();
-		}break;
-		default: //Explicit default to stop eclipse to complain
 			break;
+		default: break;
 		}
+	}
+	
+	@Override
+	public String description() {
+		return decorated.description()+"+CrushableDecorator";
 	}
 
 }

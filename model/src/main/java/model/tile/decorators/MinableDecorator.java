@@ -1,25 +1,28 @@
 package model.tile.decorators;
 
 import contract.tile.ICollideAction;
-import model.tile.Tile;
+import contract.tile.ITile;
 
 public class MinableDecorator extends Decorator {
-	
-	public MinableDecorator(Tile tile) {
+
+	public MinableDecorator(ITile tile) {
 		super(tile);
 	}
-
+	
 	@Override
-	public boolean collide(ICollideAction ac)  {
-		boolean b = super.collide(ac);
+	public boolean collide(ICollideAction ac) {
 		switch(ac.getType()) {
 		case HUMAN: {
 			this.delete();
 			return true;
 		}
-		default: break;
+		default: return this.decorated.collide(ac);
 		}
-		return b;
+	}
+	
+	@Override
+	public String description() {
+		return decorated.description()+"+MinableDecorator";
 	}
 	
 }
